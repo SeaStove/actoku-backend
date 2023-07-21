@@ -26,7 +26,7 @@ async function commonGet(subroute, req) {
 
 app.use(cors());
 
-app.get("/api/search/movies", async (req, res, next) => {
+app.get("/api/search/movie", async (req, res, next) => {
   try {
     const data = await commonGet("/search/movie", req);
     res.status(200).json(data);
