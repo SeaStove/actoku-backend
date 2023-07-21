@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const needle = require("needle");
+const cors = require("cors");
 const url = require("url");
 const app = express();
 const port = process.env.PORT || 5000;
@@ -22,6 +23,8 @@ async function commonGet(subroute, req) {
 
   return data;
 }
+
+app.use(cors());
 
 app.get("/api/search/movies", async (req, res, next) => {
   try {
