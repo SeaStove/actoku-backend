@@ -3,8 +3,13 @@ const express = require("express");
 const needle = require("needle");
 const cors = require("cors");
 const url = require("url");
+
 const app = express();
+const db = require("./db/queries");
+var bodyParser = require("body-parser");
 const port = process.env.PORT || 5000;
+
+app.use(bodyParser.json());
 
 app.get("/api/health", (req, res) => res.send("OK"));
 const API_BASE_URL = process.env.API_BASE_URL;
@@ -43,6 +48,10 @@ app.get("/api/movie/:movieId/credits", async (req, res, next) => {
     next(error);
   }
 });
+
+app.get("/api/guesses", db.getGuesses);
+app.get("/api/guesses/stats", db.getGuessStats);
+app.post("/api/guesses", db.insertGuess);
 
 const server = app.listen(port, () =>
   console.log(`Example app listening on port ${port}!`)
