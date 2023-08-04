@@ -29,9 +29,25 @@ async function commonGet(subroute, req) {
   return data;
 }
 
+const allowedOrigins = ['https://api.actoku.com/', 'http://localhost:5173']; 
+
+// CORS options to only allow specific origins
+const corsOptions = {
+  origin: function (origin, callback) {
+    console.log(origin);
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('No Siree'));
+    }
+  },
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
 // TODO: Uncomment this when we release the app
 // if (process.env.NODE_ENV !== "production") {
-app.use(cors());
+app.use(cors(corsOptions));
 // }
 
 app.get("/search/movie", async (req, res, next) => {
