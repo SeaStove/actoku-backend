@@ -24,7 +24,7 @@ const getGuesses = (request, response) => {
 };
 
 const insertGuess = (request, response) => {
-  console.log(request.body);
+  // console.log(request.body);
   try {
     const { squares, guesses } = request.body;
 
