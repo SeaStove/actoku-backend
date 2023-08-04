@@ -29,7 +29,11 @@ async function commonGet(subroute, req) {
   return data;
 }
 
-const allowedOrigins = ['https://api.actoku.com/', 'http://localhost:5173']; 
+const allowedOrigins = [
+  "https://api.actoku.com/",
+  "http://localhost:5173",
+  "https://www.actoku.com/",
+];
 
 // CORS options to only allow specific origins
 const corsOptions = {
@@ -38,11 +42,11 @@ const corsOptions = {
     if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('No Siree'));
+      callback(new Error("No Siree"));
     }
   },
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
 };
 
 // TODO: Uncomment this when we release the app
