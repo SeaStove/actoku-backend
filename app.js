@@ -11,7 +11,7 @@ const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
 
-app.get("/api/health", (req, res) => res.send("OK"));
+app.get("/health", (req, res) => res.send("OK"));
 const API_BASE_URL = process.env.API_BASE_URL;
 const API_KEY_NAME = process.env.API_KEY_NAME;
 const API_KEY_VALUE = process.env.API_KEY_VALUE;
@@ -31,7 +31,7 @@ async function commonGet(subroute, req) {
 
 app.use(cors());
 
-app.get("/api/search/movie", async (req, res, next) => {
+app.get("/search/movie", async (req, res, next) => {
   try {
     const data = await commonGet("/search/movie", req);
     res.status(200).json(data);
@@ -40,7 +40,7 @@ app.get("/api/search/movie", async (req, res, next) => {
   }
 });
 
-app.get("/api/movie/:movieId/credits", async (req, res, next) => {
+app.get("/movie/:movieId/credits", async (req, res, next) => {
   try {
     const data = await commonGet(`/movie/${req.params.movieId}/credits`, req);
     res.status(200).json(data);
@@ -49,9 +49,9 @@ app.get("/api/movie/:movieId/credits", async (req, res, next) => {
   }
 });
 
-app.get("/api/guesses", db.getGuesses);
-app.get("/api/guesses/stats", db.getGuessStats);
-app.post("/api/guesses", db.insertGuess);
+app.get("/guesses", db.getGuesses);
+app.get("/guesses/stats", db.getGuessStats);
+app.post("/guesses", db.insertGuess);
 
 const server = app.listen(port, () =>
   console.log(`Example app listening on port ${port}!`)
