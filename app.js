@@ -29,9 +29,10 @@ async function commonGet(subroute, req) {
   return data;
 }
 
-if (process.env.NODE_ENV !== "production") {
-  app.use(cors());
-}
+// TODO: Uncomment this when we release the app
+// if (process.env.NODE_ENV !== "production") {
+app.use(cors());
+// }
 
 app.get("/search/movie", async (req, res, next) => {
   try {
