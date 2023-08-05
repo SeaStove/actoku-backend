@@ -33,6 +33,7 @@ const allowedOrigins = [
   "https://api.actoku.com/",
   "http://localhost:5173",
   "https://www.actoku.com/",
+  "http://127.0.0.1:5173",
 ];
 
 // CORS options to only allow specific origins
