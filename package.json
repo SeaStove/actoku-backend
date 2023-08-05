@@ -11,8 +11,9 @@
   "scripts": {
     "build": "tsc",
     "start": "node ./dist/app.js",
-    "dev": "tsc && nodemon ./dist/app.js",
-    "generate": "tsc && node ./dist/generate.js"
+    "dev": "tsc-watch --onSuccess \"node ./dist/app.js\"",
+    "generate": "tsc && node ./dist/generate.js",
+    "generate-dev": "tsc-watch --onSuccess \"node ./dist/generate.js\""
   },
   "dependencies": {
     "body-parser": "^1.20.2",
@@ -32,6 +33,7 @@
     "@types/express": "^4.17.17",
     "@types/needle": "^3.2.0",
     "@types/node": "^20.4.8",
+    "tsc-watch": "^6.0.4",
     "typescript": "^5.1.6"
   }
 }
