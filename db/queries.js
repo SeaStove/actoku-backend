@@ -24,7 +24,6 @@ const getGuesses = (request, response) => {
 };
 
 const insertGuess = (request, response) => {
-  // console.log(request.body);
   try {
     const { squares, guesses } = request.body;
 
@@ -53,13 +52,47 @@ const insertGuess = (request, response) => {
 };
 
 const getGuessStats = (request, response) => {
-  // TODO: write this query
-  pool.query(`SELECT * from guesses`, (error, results) => {
-    if (error) {
-      throw error;
+  pool.query(
+    `SELECT * FROM guesses`,
+
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      const totalGuessesPerSquare = {};
+      for (let i = 0; i < 9; i++) {
+        totalGuessesPerSquare[`square_${i}`] = results.rows.reduce(
+          (total, row) =>
+            total + (row[`square_${i}`] !== null ? row.number_of_guesses : 0),
+          0
+        );
+      }
+
+      // Create the summary object
+      const summary = {};
+      for (let i = 0; i < 9; i++) {
+        const squareKey = `square_${i}`;
+        summary[squareKey] = {};
+        results.rows
+          .filter((row) => row[`square_${i}`] !== null)
+          .forEach((row) => {
+            const percent =
+              (100 * row.number_of_guesses) /
+              totalGuessesPerSquare[`square_${i}`];
+            summary[squareKey][row.id] = parseFloat(percent.toFixed(2)); // Rounding to 2 decimal places
+          });
+      }
+
+      // Calculate the average number of guesses
+      const totalGuesses = results.rows.reduce(
+        (total, row) => total + row.number_of_guesses,
+        0
+      );
+      const averageGuesses = totalGuesses / results.rows.length;
+      summary.average_number_of_guesses = averageGuesses;
+      response.status(200).json(summary);
     }
-    response.status(200).json(results);
-  });
+  );
 };
 
 module.exports = {

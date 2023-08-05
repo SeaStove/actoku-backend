@@ -30,9 +30,9 @@ async function commonGet(subroute, req) {
 }
 
 const allowedOrigins = [
-  "https://api.actoku.com/",
+  "https://api.actoku.com",
   "http://localhost:5173",
-  "https://www.actoku.com/",
+  "https://www.actoku.com",
   "http://127.0.0.1:5173",
 ];
 
@@ -77,9 +77,12 @@ app.get("/guesses", db.getGuesses);
 app.get("/guesses/stats", db.getGuessStats);
 app.post("/guesses", db.insertGuess);
 
-const server = app.listen(port, () =>
-  console.log(`Example app listening on port ${port}!`)
-);
+const server = app.listen(port, () => {
+  console.log(`Example app listening on port ${port}!`);
+  if (process.env.NODE_ENV !== "production") {
+    console.log(`Local URL to hit: http://localhost:${port}`);
+  }
+});
 
 server.keepAliveTimeout = 120 * 1000;
 server.headersTimeout = 120 * 1000;

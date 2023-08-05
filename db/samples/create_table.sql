@@ -11,3 +11,11 @@ CREATE TABLE guesses (
     square_8 INT,
     number_of_guesses INT
 );
+
+CREATE TABLE most_popular_guesses (
+    square INT,
+    movie_id INT,
+    poster_url VARCHAR(255),
+    title VARCHAR(255),
+    popularity_percentage DECIMAL(5,2)
+);
