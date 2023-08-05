@@ -6,11 +6,13 @@
   "repository": "https://github.com/render-examples/express-hello-world",
   "author": "Render Developers",
   "license": "MIT",
-  "module": "commonjs",
+  "type": "module",
   "private": false,
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js"
+    "build": "tsc",
+    "start": "node ./dist/app.js",
+    "dev": "tsc && nodemon ./dist/app.js",
+    "generate": "tsc && node ./dist/generate.js"
   },
   "dependencies": {
     "body-parser": "^1.20.2",
@@ -24,5 +26,12 @@
   },
   "engines": {
     "node": ">=14"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "@types/needle": "^3.2.0",
+    "@types/node": "^20.4.8",
+    "typescript": "^5.1.6"
   }
 }

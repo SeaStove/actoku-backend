@@ -12,7 +12,7 @@ CREATE TABLE guesses (
     number_of_guesses INT
 );
 
-CREATE TABLE most_popular_guesses (
+CREATE TABLE possible_answers (
     square INT,
     movie_id INT,
     poster_url VARCHAR(255),

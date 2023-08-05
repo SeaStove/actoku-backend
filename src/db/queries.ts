@@ -1,6 +1,6 @@
-const Pool = require("pg").Pool;
-const url = require("url");
-
+import pkg from "pg";
+const { Pool } = pkg;
+import url from "url";
 const params = url.parse(process.env.DATABASE_URL);
 const auth = params.auth.split(":");
 const config = {
@@ -14,7 +14,7 @@ const config = {
 
 const pool = new Pool(config);
 
-const getGuesses = (request, response) => {
+export const getGuesses = (request, response) => {
   pool.query("SELECT * FROM guesses ORDER BY id ASC", (error, results) => {
     if (error) {
       throw error;
@@ -23,7 +23,7 @@ const getGuesses = (request, response) => {
   });
 };
 
-const insertGuess = (request, response) => {
+export const insertGuess = (request, response) => {
   try {
     const { squares, guesses } = request.body;
 
@@ -51,7 +51,7 @@ const insertGuess = (request, response) => {
   }
 };
 
-const getGuessStats = (request, response) => {
+export const getGuessStats = (request, response) => {
   pool.query(
     `SELECT * FROM guesses`,
 
@@ -69,7 +69,9 @@ const getGuessStats = (request, response) => {
       }
 
       // Create the summary object
-      const summary = {};
+      const summary: { average_number_of_guesses } = {
+        average_number_of_guesses: 0,
+      };
       for (let i = 0; i < 9; i++) {
         const squareKey = `square_${i}`;
         summary[squareKey] = {};
@@ -93,10 +95,4 @@ const getGuessStats = (request, response) => {
       response.status(200).json(summary);
     }
   );
-};
-
-module.exports = {
-  getGuesses,
-  insertGuess,
-  getGuessStats,
 };

@@ -1,12 +1,12 @@
-require("dotenv").config();
-const express = require("express");
-const needle = require("needle");
-const cors = require("cors");
-const url = require("url");
+import "dotenv/config";
+import express from "express";
+import needle from "needle";
+import cors from "cors";
+import url from "url";
+import bodyParser from "body-parser";
+import { getGuessStats, getGuesses, insertGuess } from "./db/queries.js";
 
 const app = express();
-const db = require("./db/queries");
-var bodyParser = require("body-parser");
 const port = process.env.PORT || 5000;
 
 app.use(bodyParser.json());
@@ -17,10 +17,13 @@ const API_KEY_NAME = process.env.API_KEY_NAME;
 const API_KEY_VALUE = process.env.API_KEY_VALUE;
 
 async function commonGet(subroute, req) {
+  if (!API_BASE_URL || !API_KEY_NAME || !API_KEY_VALUE) {
+    throw new Error("Missing API_BASE_URL, API_KEY_NAME, or API_KEY_VALUE");
+  }
   const params = new URLSearchParams({
     ...url.parse(req.url, true).query,
     [API_KEY_NAME]: API_KEY_VALUE,
-  });
+  } as any);
 
   const requestUrl = `${API_BASE_URL}${subroute}?${params}`;
   const apiRes = await needle("get", requestUrl);
@@ -73,9 +76,9 @@ app.get("/movie/:movieId/credits", async (req, res, next) => {
   }
 });
 
-app.get("/guesses", db.getGuesses);
-app.get("/guesses/stats", db.getGuessStats);
-app.post("/guesses", db.insertGuess);
+app.get("/guesses", getGuesses);
+app.get("/guesses/stats", getGuessStats);
+app.post("/guesses", insertGuess);
 
 const server = app.listen(port, () => {
   console.log(`Example app listening on port ${port}!`);
