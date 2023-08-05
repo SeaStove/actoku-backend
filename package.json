@@ -12,8 +12,10 @@
     "build": "npx tsc",
     "start": "node ./dist/app.js",
     "dev": "tsc-watch --onSuccess \"node ./dist/app.js\"",
-    "generate": "tsc && node ./dist/generate.js",
-    "generate-dev": "tsc-watch --onSuccess \"node ./dist/generate.js\""
+    "generate": "cd generate && npm start",
+    "generate-dev": "cd generate && npm run dev",
+    "cron": "cd cron && npm start",
+    "cron-dev": "cd cron && npm run dev"
   },
   "dependencies": {
     "body-parser": "^1.20.2",

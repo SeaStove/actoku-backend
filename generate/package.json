@@ -1,11 +1,11 @@
 {
-  "name": "cron",
+  "name": "generate",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "tsc && node ./dist/index.js",
-    "dev": "tsc-watch --onSuccess \"node ./dist\""
+    "start": "tsc && node ./dist/generate.js",
+    "dev": "tsc-watch --onSuccess \"node ./dist/generate.js\""
   },
   "keywords": [],
   "author": "",
