@@ -14,7 +14,7 @@
     "dev": "tsc-watch --onSuccess \"node ./dist/app.js\"",
     "generate": "cd generate && npm start",
     "generate-dev": "cd generate && npm run dev",
-    "cron": "cd cron && npm start",
+    "cron": "cd cron && npm install && npm start",
     "cron-dev": "cd cron && npm run dev"
   },
   "dependencies": {
