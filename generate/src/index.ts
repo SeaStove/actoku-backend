@@ -1,1 +1,1 @@
-console.log("Hey I'm a cron job!");
+console.log("Hey I'm generatin games here!!");
