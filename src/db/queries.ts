@@ -51,6 +51,30 @@ export const insertGuess = (request, response) => {
   }
 };
 
+export const insertPossibleAnswer = (request, response) => {
+  try {
+    const { square, movie_id, poster_url, title, popularity_percentage } =
+      request.body;
+
+    const sql =
+      "INSERT INTO possible_answers (square, movie_id, poster_url, title, popularity_percentage) VALUES (?, ?, ?, ?, ?)";
+    const values = [square, movie_id, poster_url, title, popularity_percentage];
+
+    pool.query(sql, values, (err, result) => {
+      if (err) {
+        console.error("Error inserting data:", err);
+        response.status(500).json({ error: "Error inserting data" });
+      } else {
+        console.log("Data inserted successfully!");
+        response.status(200).json({ message: "Data inserted successfully" });
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    response.status(500).send(`Error adding guess: ${error}`);
+  }
+};
+
 export const getGuessStats = (request, response) => {
   pool.query(
     `SELECT * FROM guesses`,
