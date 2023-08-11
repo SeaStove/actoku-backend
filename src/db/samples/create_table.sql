@@ -19,3 +19,9 @@ CREATE TABLE possible_answers (
     title VARCHAR(255),
     popularity_percentage DECIMAL(5,2)
 );
+
+CREATE TABLE games ( 
+    json_data JSONB NOT NULL, 
+    date_added TIMESTAMP DEFAULT NOW(),
+    game_date TIMESTAMP PRIMARY KEY
+);
