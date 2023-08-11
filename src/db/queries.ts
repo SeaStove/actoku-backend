@@ -23,6 +23,16 @@ export const getGuesses = (request, response) => {
   });
 };
 
+export const getTodaysGame = (request, response) => {
+  pool.query("SELECT json_data FROM games where game_date = CURRENT_DATE ", (error, results) => {
+    if (error) {
+      throw error;
+    }
+    console.log(results);
+    response.status(200).json(results.rows[0]["json_data"]);
+  });
+};
+
 export const insertGuess = (request, response) => {
   try {
     const { squares, guesses } = request.body;

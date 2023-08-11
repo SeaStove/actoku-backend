@@ -4,7 +4,7 @@ import needle from "needle";
 import cors from "cors";
 import url from "url";
 import bodyParser from "body-parser";
-import { getGuessStats, getGuesses, insertGuess } from "./db/queries.js";
+import { getGuessStats, getGuesses, getTodaysGame, insertGuess } from "./db/queries.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -78,6 +78,7 @@ app.get("/movie/:movieId/credits", async (req, res, next) => {
 
 app.get("/guesses", getGuesses);
 app.get("/guesses/stats", getGuessStats);
+app.get("/game", getTodaysGame);
 app.post("/guesses", insertGuess);
 
 const server = app.listen(port, () => {
