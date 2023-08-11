@@ -50,52 +50,24 @@ const getAllGuesses = async () => {
 const updatePossibleAnswers = async () => {
   try {
     const guesses = await getAllGuesses();
+    const totalCount = {0:{},1: {}, 2: {}, 3: {}, 4:{}, 5:{}, 6:{}, 7:{}, 8:{}};
     guesses.forEach((guess) => {
       const {
-        square_0,
-        square_1,
-        square_2,
-        square_3,
-        square_4,
-        square_5,
-        square_6,
-        square_7,
-        square_8,
+        number_of_guesses, id, ...squares
       } = guess;
-      const squares = [
-        square_0,
-        square_1,
-        square_2,
-        square_3,
-        square_4,
-        square_5,
-        square_6,
-        square_7,
-        square_8,
-      ];
-      squares.forEach((square) => {
-        if (square !== null) {
-          const sql = "SELECT * FROM possible_answers WHERE square = ?";
-          const values = [square];
-          pool.query(sql, values, (err, result) => {
-            if (err) {
-              console.error("Error updating data:", err);
-            } else {
-              const { movie_id, poster_url, title } = result.rows[0];
-              const popularity_percentage = guess.number_of_guesses / 100;
-              const data = {
-                square,
-                movie_id,
-                poster_url,
-                title,
-                popularity_percentage,
-              };
-              insertPossibleAnswer(data);
-            }
-          });
+
+      Object.values(squares).forEach((movie_id, index) => {
+        // console.log(movie_id, index);
+        if (movie_id !== null) {
+          totalCount[index].total = (totalCount[index].total ?? 0) + 1;
+          totalCount[index][movie_id] = (totalCount?.[index]?.[movie_id] ?? 0) + 1;
         }
       });
     });
+    console.log(totalCount)
+    Object.keys(totalCount).forEach(square => {
+       //TODO: Update popularity
+    })
   } catch (error) {
     console.log(error);
   }
