@@ -1,6 +1,6 @@
 import "dotenv/config";
 import needle from "needle";
-import async from "async";
+// import async from "async";
 import * as fs from "fs";
 
 const API_BASE_URL = process.env.API_BASE_URL;
