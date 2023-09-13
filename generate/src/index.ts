@@ -2,6 +2,7 @@ import "dotenv/config";
 import needle from "needle";
 // import async from "async";
 import * as fs from "fs";
+// import cache from "./cache.json";
 
 const API_BASE_URL = process.env.API_BASE_URL;
 const API_KEY_NAME = process.env.API_KEY_NAME;
@@ -235,7 +236,7 @@ async function getMovieCollectionForActor(
           ""
         );
         populateMovieCollectionMap(
-          movieCredits.cast,
+          [...movieCredits.cast, ...movieCredits.crew],
           movie,
           movieCollection,
           actorId
